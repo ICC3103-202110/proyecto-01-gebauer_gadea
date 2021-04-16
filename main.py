@@ -1,6 +1,6 @@
 import random
 #primero pregunta cantidad de jugadores
-from cards import Cards
+from players import Players
 players = []
 influences = []
 posibilities = ["D","A","Ca","Co","E"]
@@ -18,19 +18,19 @@ def create_game():
         for j in range(0,players_num):
             influences.append(i)
     random.shuffle(influences)
-    card1 = select_influence()
-    card2 = select_influence()
     for i in range(0,players_num):
-        p = Cards(str(i+1),card1,card2)
-        players.append(p)
+        card1 = select_influence()
+        card2 = select_influence()
+        players.append(Players(str(i+1),card1,card2,2))
 
 
 def show_cards():
     print("\nJugadores y cartas ")
     for (i,_) in enumerate(players):
-        print(f"{i}: {players[i].player_number}-{players[i].influence1}-{players[i].influence2}")
+        print(f"{i}: {players[i].player_number} - {players[i].influence1} - {players[i].influence2} - {players[i].coins}")
 
 
 if __name__ == '__main__':   
     create_game()
+    show_cards()
 
