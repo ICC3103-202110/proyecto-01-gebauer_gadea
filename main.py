@@ -1,6 +1,7 @@
 import random
 #primero pregunta cantidad de jugadores
 from players import Players
+from general_accions import General_accions
 players = []
 influences = []
 posibilities = ["D","A","Ca","Co","E"]
@@ -51,11 +52,14 @@ def menu1():
     while True:
         selection = print_menu1()
         if selection == 1:
-            print("1")
+            a=General_accions(players,0)
+            a.entry()  
         if selection == 2:
-            print("2")
+            a=General_accions(players,0)
+            a.abroad_help()
         if selection ==3:
-            print("3")
+            a=General_accions(players,0)
+            a.hit()
         if selection == 4:
             print("4")
         if selection == 5:
