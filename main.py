@@ -1,10 +1,10 @@
 import random
 #primero pregunta cantidad de jugadores
-from players import Players
+from cards import Cards
 players = []
 influences = []
 posibilities = ["D","A","Ca","Co","E"]
-
+print("Duque = D\nAsesino = A\nCapitán = Ca\nEmbajador= E\nCondesa = Co")
 
     
 def select_influence():
@@ -21,15 +21,14 @@ def create_game():
     card1 = select_influence()
     card2 = select_influence()
     for i in range(0,players_num):
-        p = Players(str(i+1),card1,card2)
+        p = Cards(str(i+1),card1,card2)
         players.append(p)
-    
+
 
 def show_cards():
     print("\nJugadores y cartas ")
     for (i,_) in enumerate(players):
         print(f"{i}: {players[i].player_number}-{players[i].influence1}-{players[i].influence2}")
-
 
 
 if __name__ == '__main__':   
