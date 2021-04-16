@@ -1,5 +1,5 @@
 
-class General_accions:
+class General_actions:
     def __init__(self,players,i):
         self.__players=players
         self.__i = i
