@@ -73,13 +73,13 @@ def print_menu1(p_counter):
 
 def menu1(p_counter, players_num):
     while True:
+        a= General_actions(players,p_counter)
+        c = Character_actions(players,influences,p_counter)
         selection = print_menu1(p_counter)
         if selection == 1:
-            a=General_actions(players,p_counter)
             a.entry() 
             change_player(p_counter,players_num) 
         if selection == 2:
-            a=General_actions(players,p_counter)
             b,j = a.abroad_help()
             if b == 1:
                 players[j]._Players__influence1 = return_card(players[j]._Players__influence1)  
@@ -92,7 +92,6 @@ def menu1(p_counter, players_num):
                 print("No puede realizar la acción golpe porque le faltan monedas. Trate otra")
                 menu1(p_counter, players_num)
             else:
-                a= General_actions(players,p_counter)
                 a.hit()
                 change_player(p_counter,players_num)
         if selection == 4:
@@ -100,11 +99,10 @@ def menu1(p_counter, players_num):
                 print("No puede realizar la acción golpe porque le faltan monedas. Trate otra")
                 menu1(p_counter, players_num)
             else:
-                a = Character_actions(players,influences,p_counter)  
-                a.tax()
+                c.tax()
                 change_player(p_counter, players_num)
         if selection == 5:
-            b,j = a.murder()
+            b = c.murder()
             if b == 1:
                 players[j]._Players__influence1 = return_card(players[j]._Players__influence1) 
             elif b == 2:
@@ -113,8 +111,7 @@ def menu1(p_counter, players_num):
         if selection == 6:
             print("6")
         if selection ==7:
-            a= Character_actions(players,influences,p_counter)
-            a.change()
+            c.change()
             random.shuffle(influences)
             print(influences)
             change_player(p_counter,players_num)

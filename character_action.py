@@ -101,7 +101,7 @@ class Character_actions:
     
     def murder(self):
         action_number = 1
-        print("EL JUGADOR"+str(self.__i +1)+"ELIGIÓ LA ACCIÓN ASESINATO")
+        print("EL JUGADOR "+str(self.__i +1)+" ELIGIÓ LA ACCIÓN ASESINATO")
         against = int(input("Elija un jugador al que quiera realizar esta acción"))
         if against ==  self.__i+1:
             print("No puede hacérselo a usted mismo")
@@ -120,8 +120,8 @@ class Character_actions:
         challenge  = []
         attack = []
         if action_number == 1:
-            bloqueo = "Condesa"
-            accion = "Asesinato"
+            bloqueo = "CONDESA"
+            accion = "ASESINATO"
             action_card = "A"
             blocking_card = "Co"
 
@@ -131,8 +131,8 @@ class Character_actions:
         for j in range(0, len(self.__player)):
             if j != self.i:
                 print("\nJugador "+str(j+1)+", elija una opción.")
-                print("\n1. POSEO LA CARTA "+bloqueo +" Y QUIERO CONTRA-ATACAR", accion, " DEL JUGADOR ", str(self.__i+1))
-                print("\n2. DESAFIAR A JUGADOR"+str(self.__i+1))
+                print("1. POSEO LA CARTA "+bloqueo +" Y QUIERO CONTRA-ATACAR",accion, " DEL JUGADOR ",str(self.__i+1))
+                print("2. DESAFIAR A JUGADOR "+str(self.__i+1))
                 print("0. NADA\n")
                 a = int(input())
                 if a == 1:
@@ -143,6 +143,7 @@ class Character_actions:
                 elif a !=0 and a != 1:
                     print("Esa opción no es correcta, se asimila que no quiere hacer nada")
                     a = 0
+
         if len(challenge) >0:   #Tiene prioridad el desafío
             selected_challenge = random.randint(0,len(challenge)-1)  #Se elije un desafio al azar de los que decidieron desafiar
             j = challenge[selected_challenge] #j es jugador que desafía -1
@@ -151,22 +152,26 @@ class Character_actions:
             if self.player[self.__i]._Players__influence1 != action_card and self.player[self.__i]._Players__influence2 != action_card:
                 print("El jugador "+str(self.__i+1)+" no posee la influencia "+action_card+", da vuelta una carta")
                 self.show_card(self.__i+1, action_number)      #Como no posee la influencia, la acción no se realiza
-
+                return 0
             
             elif self.player[self.__i]._Players__influence1 == action_card:
                 print("El jugador "+str(self.__i +1)+" posee la influencia "+action_card + ", el jugador "+str(j+1)+" da vuelta una carta")
                 self.show_card(j+1,action_number)
+                return 0
 
                 print("El jugador "+str(self.__i +1)+" devuelve su carta al mazo y saca otra")
                 self.make_murder(against)         #Como posee la influencia, la acción se realiza al jugador elegido
-                return 1, self.__i
+                return 0
+                #return 1, self.__i
 
             elif self.player[self.__i]._Players__influence2 == action_card:
                 print("El jugador "+str(self.__i +1)+" posee la influencia "+action_card + ", el jugador "+str(j+1)+" da vuelta una carta")
                 self.show_card(j+1,action_number)
                 print("El jugador "+str(self.__i +1)+" devuelve su carta al mazo y saca otra.")
-                self.make_murder(self,against)         #Como posee la influencia, la acción se realiza
-                return 2, self.__i
+                self.make_murder(against)         #Como posee la influencia, la acción se realiza
+                return 0
+                #return 2, self.__i
+        #FALTAN LOS CONRAATAQUES
 
     def make_murder(self,against):
         print("Se realiza el asesinato al jugador"+str(against))
