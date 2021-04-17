@@ -75,10 +75,10 @@ class General_actions:
                         return 2,j
             else:       
                 print("Nadie desafió el contra-ataque")  #En el caso de que nadie haya querido desafiar el contra-ataque, la acción se anula y no pasa nada
-                return 0 
+                return 0,0
         else:
             self.player[self.__i]._Players__coins+= 2  #En el caso de que ya les hayan preguntado a todos y nadie haya querido contraatacar
-            return 0
+            return 0,0
 
 
     def hit(self):

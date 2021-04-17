@@ -87,7 +87,7 @@ def menu1(p_counter, players_num):
                 players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
                
             change_player(p_counter,players_num)
-        if selection ==3:
+        if selection ==3:                            #LISTA
             if players[p_counter].coins < 7:
                 print("No puede realizar la acción golpe porque le faltan monedas. Trate otra")
                 menu1(p_counter, players_num)
@@ -96,9 +96,20 @@ def menu1(p_counter, players_num):
                 a.hit()
                 change_player(p_counter,players_num)
         if selection == 4:
-            print("4")
+            if players[p_counter].coins < 3:
+                print("No puede realizar la acción golpe porque le faltan monedas. Trate otra")
+                menu1(p_counter, players_num)
+            else:
+                a = Character_actions(players,influences,p_counter)  
+                a.tax()
+                change_player(p_counter, players_num)
         if selection == 5:
-            print("5")
+            b,j = a.murder()
+            if b == 1:
+                players[j]._Players__influence1 = return_card(players[j]._Players__influence1) 
+            elif b == 2:
+                players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
+
         if selection == 6:
             print("6")
         if selection ==7:
