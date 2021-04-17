@@ -1,10 +1,13 @@
 import random
 
+
+
 class General_actions:
     def __init__(self,player,i):
-        self.__player = player #lista de jugadores
+        self.__player = player #lista de jugadores   
         self.__i = i   #Jugador que está jugando
-            
+          
+
     @property
     def player(self):
         return self.__player
@@ -15,15 +18,15 @@ class General_actions:
         return self.__i
 
 
-
     def entry(self):
+
         self.player[self.__i]._Players__coins += 1
         return 0
 
     def abroad_help(self):
         challenge = []
         attack = []
-        for j in range(0,3): #Hay que buscar la forma de saber la cantidad de jugadores que juegan
+        for j in range(0, len(self.__player)): #Hay que buscar la forma de saber la cantidad de jugadores que juegan
             if j != self.i:
                 print("\nJugador "+str(j+1)+", elija una opción.")
                 print("\n1. POSEO EL DUQUE Y QUIERO CONTRA-ATACAR AYUDA DEL EXTRANJERO DE JUGADOR", self.i+1)
@@ -31,19 +34,17 @@ class General_actions:
                 a = int(input())
                 if a == 1:  #Si alguien quiere contraatacar..
                     attack.append(j)
+                    
 
-                elif a == 0:
-                    continue
 
                 elif a !=0 and a != 1:
                     print("Esa opción no es correcta, se asimila que no quiere hacer nada")
                     a = 0
-                    continue
         if len(attack) >0:    #si alguien quiso contra-atacar....
             selected_attack = random.randint(0,len(attack)-1)  #Se elije un contra-ataque al azar de los que decidieron contra-atacar
             j = attack[selected_attack]
             print("--------------El jugador "+ str(j+1) +" realiza un contra-ataque a jugador "+str(self.i+1)+"-------------")
-            for a in range(0,3):
+            for a in range(0, len(self.__player)):
                 if a != j:
                     print("\nJugador "+str(a+1)+", elija una opción.")
                     print("\n1. DESAFIAR A JUGADOR", j+1)
@@ -58,17 +59,17 @@ class General_actions:
                 if self.player[j]._Players__influence1 != "D" and self.player[j]._Players__influence2 != "D":
                         print("El jugador "+str(j+1)+" no posee la influencia Duque, da vuelta una carta")
                         self.show_card(j+1,2)
-                        return 0 
+                        return 0
                 elif self.player[j]._Players__influence1 == 'D':
                         print("El jugador "+str(j+1)+" posee la influencia Duque, el jugador "+str(a+1)+" da vuelta una carta")
                         self.show_card(a+1,2)
                         print("El jugador "+str(j+1)+" devuelve su carta al mazo y saca otra")
-                        return 1
+                        return 1,j
                 elif self.player[j]._Players__influence2 == 'D':
-                        print("El jugador "+str(j+1)+"posee la influencia Duque, el jugador "+str(a+1)+" da vuelta una carta")
+                        print("El jugador "+str(j+1)+" posee la influencia Duque, el jugador "+str(a+1)+" da vuelta una carta")
                         self.show_card(a+1,2)
                         print("El jugador "+str(j+1)+" devuelve su carta al mazo y saca otra")
-                        return 1
+                        return 2,j
             else:       
                 print("Nadie desafió el contra-ataque")  #En el caso de que nadie haya querido desafiar el contra-ataque, la acción se anula y no pasa nada
                 return 0 
@@ -82,7 +83,7 @@ class General_actions:
         if against ==  self.__i+1:
             print("No puede hacérselo a usted mismo")
             self.hit()
-        elif against <1 or against > len(self.player):
+        elif against <1 or against > self.__player:
             print("No existe ese jugador")
             self.hit()
         else: 
@@ -119,4 +120,3 @@ class General_actions:
 
         else:
                 self.player[against-1]._Players__seen_cards2 = "["+str(self.player[against-1]._Players__influence2)+"]"
-

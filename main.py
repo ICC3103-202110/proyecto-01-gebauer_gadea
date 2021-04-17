@@ -1,9 +1,11 @@
-import random
-#primero pregunta cantidad de jugadores
-from players import Players
-from character_action import Character_actions
-from general_actions import General_actions
+#PREGUNTAS PARA AYUDANTE:
+#1) Cómo hacer una clase padre que tenga los atributos de general_actiones y character_actions (son los mismos atributos)
+#2) Las 2 clases comparten el método de show_card()
 
+import random
+from players import Players
+from general_actions import General_actions
+from character_action import Character_actions
 
 players = []
 influences = []
@@ -18,7 +20,7 @@ def select_influence():
 def show_coins():
     print("\nMonedas de jugadores\n")
     for (i,_) in enumerate(players):
-        print(f"player{players[i]._Players__player_number} => {players[i]._Players__coins}")
+        print(f"player{players[i]._Players__player_number} => {players[i]._Players__coins},{players[i]._Players__influence1},{players[i]._Players__influence2}")
     shown_cards()
 
 def create_game():
@@ -70,7 +72,12 @@ def menu1(p_counter, players_num):
             change_player(p_counter,players_num) 
         if selection == 2:
             a=General_actions(players,p_counter)
-            a.abroad_help()
+            b,j = a.abroad_help()
+            if b == 1:
+                players[j]._Players__influence1 = return_card(players[j]._Players__influence1)  
+            elif b == 2:
+                players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
+               
             change_player(p_counter,players_num)
         if selection ==3:
             if players[p_counter].coins < 7:
@@ -108,7 +115,12 @@ def change_player(p_counter, players_num):
     menu1(p_counter,players_num)
 
 
-
+def return_card(carta):
+    influences.append(carta)            #Devuelve la carta al mazo 
+    random.shuffle(influences)          #Se mezcla el mazo
+    return_card1 = influences[0]        #Toma una carta del mazo
+    influences.pop(0)
+    return return_card1
 
 
 
