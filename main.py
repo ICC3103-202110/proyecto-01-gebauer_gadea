@@ -1,6 +1,7 @@
 #PREGUNTAS PARA AYUDANTE:
 #1) Cómo hacer una clase padre que tenga los atributos de general_actiones y character_actions (son los mismos atributos)
 #2) Las 2 clases comparten el método de show_card()
+#3) No entiendo en el caso de las acciones generales qué pasa con la acción cuando el que desafiaba pierde.
 
 import random
 from players import Players
@@ -40,12 +41,18 @@ def print_menu1(p_counter):
     print("-------------------------------------")
     print("Le toca al jugador", int(p_counter)+1)
     print("-------------------------------------\n")
+    print("\nQuiere ver sus cartas? s/n")
+    see = str(input())
+    if see == "s":
+        print(f"Sus cartas son => {players[p_counter]._Players__influence1},{players[p_counter]._Players__influence2}")
+    if see != "n":
+        print("Respuesta incorrecta. Se asume que no quiere ver sus cartas")
     if players[p_counter].coins == 10:                  ####
         print("Tiene 10 monedas. Toma la acción de golpe")######
         answer = 3                              ####
         return answer                           ####
     else:   
-        print("INGRESE UNA OPCION:")
+        print("\nINGRESE UNA OPCION:")
         print("1. Ingreso")
         print("2. Ayuda del extranjero")
         print("3. Golpe")
