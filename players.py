@@ -1,12 +1,21 @@
 class Players:
-    def __init__(self,player_number,influence1,influence2,coins):
+    def __init__(self,player_number,influence1,influence2,coins,seen_cards1 = 0, seen_cards2 = 0):
         self.__player_number = player_number
         self.__influence1 = influence1
         self.__influence2 = influence2
         self.__coins = coins
+        self.__seen_cards1 = seen_cards1
+        self.__seen_cards2 = seen_cards2
+
     @property
     def player_number (self):
         return self.__player_number
+    @property
+    def seen_cards2 (self):
+        return self.__seen_cards2
+    @property
+    def seen_cards1 (self):
+        return self.__seen_cards1
     @property
     def influence1 (self):
         return self.__influence1
