@@ -2,6 +2,7 @@
 #1) Cómo hacer una clase padre que tenga los atributos de general_actiones y character_actions (son los mismos atributos)
 #2) Las 2 clases comparten el método de show_card()
 #3) No entiendo en el caso de las acciones generales qué pasa con la acción cuando el que desafiaba pierde.
+#4) Cuántas clases tienen que haber?
 
 import random
 from players import Players
