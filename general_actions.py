@@ -40,6 +40,8 @@ class General_actions:
                 elif a !=0 and a != 1:
                     print("Esa opción no es correcta, se asimila que no quiere hacer nada")
                     a = 0
+
+
         if len(attack) >0:    #si alguien quiso contra-atacar....
             selected_attack = random.randint(0,len(attack)-1)  #Se elije un contra-ataque al azar de los que decidieron contra-atacar
             j = attack[selected_attack]
@@ -58,6 +60,7 @@ class General_actions:
                 print("--------------El jugador "+str(a+1)+" realiza un desafío a jugador "+str(j+1)+"-------------")
                 if self.player[j]._Players__influence1 != "D" and self.player[j]._Players__influence2 != "D":
                         print("El jugador "+str(j+1)+" no posee la influencia Duque, da vuelta una carta")
+                        self.player[self.__i]._Players__coins+= 2
                         self.show_card(j+1,2)
                         return 0
                 elif self.player[j]._Players__influence1 == 'D':
