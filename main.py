@@ -1,7 +1,7 @@
 import random
 #primero pregunta cantidad de jugadores
 from players import Players
-
+from character_action import Character_actions
 from general_actions import General_actions
 
 
@@ -87,13 +87,18 @@ def menu1(p_counter, players_num):
         if selection == 6:
             print("6")
         if selection ==7:
-            print("7")
+            a= Character_actions(players,influences,p_counter)
+            a.change()
+            random.shuffle(influences)
+            print(influences)
+            change_player(p_counter,players_num)
+            
+            
 
 def shown_cards():
-    print("\nCartas dadas vuelta de jugadores\n")
+    print("\nCartas de jugadores\n")
     for (i,_) in enumerate(players):
-        if players[i]._Players__seen_cards1 != 0 or players[i]._Players__seen_cards2 != 0:
-            print(f"player{players[i]._Players__player_number} => {players[i]._Players__seen_cards1}, {players[i]._Players__seen_cards2}\n")
+        print(f"player{players[i]._Players__player_number} => {players[i]._Players__seen_cards1} {players[i]._Players__seen_cards2}\n")
 
 def change_player(p_counter, players_num):
     if p_counter == players_num-1:

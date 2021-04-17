@@ -1,5 +1,5 @@
 class Players:
-    def __init__(self,player_number,influence1,influence2,coins,seen_cards1 = 0, seen_cards2 = 0):
+    def __init__(self,player_number,influence1,influence2,coins,seen_cards1 = str([]), seen_cards2 = str([])):
         self.__player_number = player_number
         self.__influence1 = influence1
         self.__influence2 = influence2
