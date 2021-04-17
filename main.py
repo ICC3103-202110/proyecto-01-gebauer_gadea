@@ -46,7 +46,7 @@ def print_menu1(p_counter):
     see = str(input())
     if see == "s":
         print(f"Sus cartas son => {players[p_counter]._Players__influence1},{players[p_counter]._Players__influence2}")
-    if see != "n":
+    if see != "n" and see !="s":
         print("Respuesta incorrecta. Se asume que no quiere ver sus cartas")
     if players[p_counter].coins == 10:                  ####
         print("Tiene 10 monedas. Toma la acción de golpe")######
@@ -102,7 +102,8 @@ def menu1(p_counter, players_num):
                 c.tax()
                 change_player(p_counter, players_num)
         if selection == 5:
-            b = c.murder()
+            b, j = c.block_card(1)
+           
             if b == 1:
                 players[j]._Players__influence1 = return_card(players[j]._Players__influence1) 
             elif b == 2:

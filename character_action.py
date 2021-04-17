@@ -74,7 +74,7 @@ class Character_actions:
 
     def show_card(self,against,accion):  #el against va con +1
         if self.player[against-1]._Players__seen_cards1 != str([]) and (self.player[against-1]._Players__seen_cards2 != str([])):
-            print("Ese jugador ya tiene sus cartas dadas vuelta. Ya perdió. Elija otro")
+            print("Ese jugador ya tiene sus cartas dadas vuelta. Ya perdió")
             if accion == 1:
                 self.murder()
         else:
@@ -100,7 +100,6 @@ class Character_actions:
 
     
     def murder(self):
-        action_number = 1
         print("EL JUGADOR "+str(self.__i +1)+" ELIGIÓ LA ACCIÓN ASESINATO")
         against = int(input("Elija un jugador al que quiera realizar esta acción"))
         if against ==  self.__i+1:
@@ -111,15 +110,18 @@ class Character_actions:
             self.murder()
         else:
             print("El jugador "+str(self.__i +1)+" quiere asesinar al jugador "+str(against))
+        return against
 
-        self.block_card(action_number,against)
+
+        
  
 
 
-    def block_card(self,action_number,against):
+    def block_card(self,action_number):
         challenge  = []
         attack = []
         if action_number == 1:
+            against = self.murder()
             bloqueo = "CONDESA"
             accion = "ASESINATO"
             action_card = "A"
@@ -150,28 +152,25 @@ class Character_actions:
             print("--------------El jugador "+ str(j+1) +" realiza un desafío a jugador "+str(self.__i+1)+"-------------")
             
             if self.player[self.__i]._Players__influence1 != action_card and self.player[self.__i]._Players__influence2 != action_card:
-                print("El jugador "+str(self.__i+1)+" no posee la influencia "+action_card+", da vuelta una carta")
+                print("El jugador "+str(self.__i+1)+" no posee la influencia "+action_card+", da vuelta una carta") #-->  ESTA FUNCIONA PERFECT
                 self.show_card(self.__i+1, action_number)      #Como no posee la influencia, la acción no se realiza
-                return 0
+                return 0, 0
             
             elif self.player[self.__i]._Players__influence1 == action_card:
                 print("El jugador "+str(self.__i +1)+" posee la influencia "+action_card + ", el jugador "+str(j+1)+" da vuelta una carta")
                 self.show_card(j+1,action_number)
-                return 0
-
                 print("El jugador "+str(self.__i +1)+" devuelve su carta al mazo y saca otra")
-                self.make_murder(against)         #Como posee la influencia, la acción se realiza al jugador elegido
-                return 0
-                #return 1, self.__i
+                self.make_murder(against, action_number)         #Como posee la influencia, la acción se realiza al jugador elegido
+                return 1, self.__i
 
             elif self.player[self.__i]._Players__influence2 == action_card:
                 print("El jugador "+str(self.__i +1)+" posee la influencia "+action_card + ", el jugador "+str(j+1)+" da vuelta una carta")
                 self.show_card(j+1,action_number)
                 print("El jugador "+str(self.__i +1)+" devuelve su carta al mazo y saca otra.")
-                self.make_murder(against)         #Como posee la influencia, la acción se realiza
-                return 0
-                #return 2, self.__i
+                self.make_murder(against,action_number)         #Como posee la influencia, la acción se realiza
+                return 2, self.__i
         #FALTAN LOS CONRAATAQUES
 
-    def make_murder(self,against):
+    def make_murder(self,against,action_number):
         print("Se realiza el asesinato al jugador"+str(against))
+        self.show_card(against, action_number )
