@@ -86,12 +86,12 @@ class General_actions:
         if against ==  self.__i+1:
             print("No puede hacérselo a usted mismo")
             self.hit()
-        elif against <1 or against > self.__player:
+        elif against <1 or against > len(self.__player):
             print("No existe ese jugador")
             self.hit()
         else: 
             hit = 3
-            self.player[self.__i]._Players__coins -=7
+            self.player[self.__i].coins -=7  
             self.show_card(against,hit)
 
 

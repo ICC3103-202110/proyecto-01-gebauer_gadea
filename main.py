@@ -3,6 +3,9 @@
 #2) Las 2 clases comparten el método de show_card()
 #3) No entiendo en el caso de las acciones generales qué pasa con la acción cuando el que desafiaba pierde.
 #4) Cuántas clases tienen que haber?
+#5) Cómo mostrarle las clases al jugador que elija la acción Cambio si los demás no pueden ver mostrarlas
+#6) Cómo eliminar a los jugadores
+#7) Qué pasa si un jugador tiene 0 monedas y alguien le quita más
 
 import random
 from players import Players
@@ -48,10 +51,10 @@ def print_menu1(p_counter):
         print(f"Sus cartas son => {players[p_counter]._Players__influence1},{players[p_counter]._Players__influence2}")
     if see != "n" and see !="s":
         print("Respuesta incorrecta. Se asume que no quiere ver sus cartas")
-    if players[p_counter].coins == 10:                  ####
-        print("Tiene 10 monedas. Toma la acción de golpe")######
-        answer = 3                              ####
-        return answer                           ####
+    if players[p_counter].coins == 10:                 
+        print("Tiene 10 monedas. Toma la acción de golpe")
+        answer = 3                              
+        return answer                           
     else:   
         print("\nINGRESE UNA OPCION:")
         print("1. Ingreso")
@@ -74,7 +77,7 @@ def print_menu1(p_counter):
 def menu1(p_counter, players_num):
     while True:
         a= General_actions(players,p_counter)
-        c = Character_actions(players,influences,p_counter)
+        c = Character_actions(players,p_counter)
         selection = print_menu1(p_counter)
         if selection == 1:
             a.entry() 
@@ -88,33 +91,34 @@ def menu1(p_counter, players_num):
                
             change_player(p_counter,players_num)
         if selection ==3:                            #LISTA
-            if players[p_counter].coins < 7:
-                print("No puede realizar la acción golpe porque le faltan monedas. Trate otra")
-                menu1(p_counter, players_num)
-            else:
+            try:
                 a.hit()
                 change_player(p_counter,players_num)
+            except ValueError as e:
+                print(e)
+                menu1(p_counter,players_num) 
+
         if selection == 4:
-            if players[p_counter].coins < 3:
-                print("No puede realizar la acción golpe porque le faltan monedas. Trate otra")
-                menu1(p_counter, players_num)
-            else:
                 c.tax()
                 change_player(p_counter, players_num)
-        if selection == 5:
+        if selection == 5:                           #LISTA
+            if players[p_counter].coins < 3:
+                print("No puede realizar la acción asesinato porque le faltan monedas. Trate otra")
+                menu1(p_counter, players_num)
             b, j = c.block_card(1)
-           
             if b == 1:
                 players[j]._Players__influence1 = return_card(players[j]._Players__influence1) 
             elif b == 2:
                 players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
 
-        if selection == 6:
-            print("6")
-        if selection ==7:
-            c.change()
+        if selection == 6:                            #FALTA-------------------------------------------------------
+            b, j = c.block_card2(2)
+        if selection ==7:                               #LISTA
             random.shuffle(influences)
-            print(influences)
+            h = c.change(influences[0],influences[1],influences)
+            for i in range(0,3):
+                influences.pop(i)
+            influences = h
             change_player(p_counter,players_num)
             
             
