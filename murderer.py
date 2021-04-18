@@ -1,0 +1,1 @@
+#Esta es la clase de la accion de asesinato 

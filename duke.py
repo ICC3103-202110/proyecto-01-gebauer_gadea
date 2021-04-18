@@ -1,0 +1,1 @@
+#clase duque esta es clase hija de cards

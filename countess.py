@@ -1,0 +1,1 @@
+#clase condesa esta es clase hija de cards
