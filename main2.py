@@ -97,13 +97,16 @@ def menu_options(p_counter):
             a, b= action.challenge_player()
             if a == 0 and b == 0:     #Nadie quiso desafiar, luego van los contra-ataques
                 action = Counter_attack(p_counter,players,5)
-                action = action.attack()
-                if action == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
+                player_attack = action.attack()
+                if player_attack == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
                     action = Murder(players, p_counter)
                     action.murder()
-                else:                    #Nadie quiso desafiar pero si contra-atacar
-                    
-                    print("hola")
+                else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
+                    action = Challenge(player_attack-1,players,1,5)
+                    a , b = action.challenge_player()
+                    if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple
+                        change_player(p_counter)
+                    elif a == 0 and b == 1:
             
             elif a == 0 and b ==1:    #Alguien quiso contra-atacar, el jugador pierde el desafío entonces no realiza la acción y cambia de turno
                 change_player(p_counter)

@@ -58,4 +58,4 @@ class Counter_attack:
             selected_attack = random.randint(0,len(attack)-1)  #Se elije un contra-ataque al azar de los que decidieron contra-atacar
             j = attack[selected_attack]
             print("--------------El jugador "+ str(j+1) +" realiza un contra-ataque a jugador "+str(self.player+1)+"-------------")
-        return j   #Se devuelve el jugador que quiso contra-atacar
+        return j+1   #Se devuelve el jugador que quiso contra-atacar
