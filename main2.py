@@ -94,7 +94,7 @@ def menu_options(p_counter):
 
         elif selection ==5:      #ASESINATO---------------
             action = Challenge(p_counter,players,1,5)
-            a, b= action.challenge_player()
+            a, b, c= action.challenge_player()
             if a == 0 and b == 0:     #Nadie quiso desafiar, luego van los contra-ataques
                 action = Counter_attack(p_counter,players,5)
                 player_attack = action.attack()
@@ -102,12 +102,20 @@ def menu_options(p_counter):
                     action = Murder(players, p_counter)
                     action.murder()
                 else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
-                    action = Challenge(player_attack-1,players,1,5)
-                    a , b = action.challenge_player()
+                    action = Challenge(player_attack-1,players,2,5)
+                    a, b , c = action.challenge_player()  #c es el jugador que desafió
                     if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple
                         change_player(p_counter)
-                    elif a == 0 and b == 1:
-            
+                    elif a == 0 and b == 1:  #Pierde el desafío el que contra-atacó, se ejecuta la acción
+                        action = Murder(players, p_counter)
+                        action.murder()
+                    elif b == 3:          #El que contraatacó ganó el desafío.
+                        if a == 1:
+                            players[c]._Players__influence1 = return_card(players[c]._Players__influence1)
+                        else:
+                            players[c]._Players__influence2 = return_card(players[c]._Players__influence2)
+                    
+
             elif a == 0 and b ==1:    #Alguien quiso contra-atacar, el jugador pierde el desafío entonces no realiza la acción y cambia de turno
                 change_player(p_counter)
             elif b == 3:        #Si poseía la carta influencia, entonces pasa a contra-ataques
@@ -115,7 +123,24 @@ def menu_options(p_counter):
                     players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1)
                 elif a == 2:
                     players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
-            
+                action = Counter_attack(p_counter,players,5)
+                player_attack = action.attack()
+                if player_attack == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
+                    action = Murder(players, p_counter)
+                    action.murder()
+                else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
+                    action = Challenge(player_attack-1,players,2,5)
+                    a, b , c = action.challenge_player()  #c es el jugador que desafió
+                    if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple
+                        change_player(p_counter)
+                    elif a == 0 and b == 1:  #Pierde el desafío el que contra-atacó, se ejecuta la acción
+                        action = Murder(players, p_counter)
+                        action.murder()
+                    elif b == 3:          #El que contraatacó ganó el desafío.
+                        if a == 1:
+                            players[c]._Players__influence1 = return_card(players[c]._Players__influence1)
+                        else:
+                            players[c]._Players__influence2 = return_card(players[c]._Players__influence2)
 
         elif selection ==6:    #EXTORSIÓN-------------
             action = Challenge(p_counter,players,1,6)
@@ -130,7 +155,7 @@ def menu_options(p_counter):
                 elif a == 2:
                     players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
             
-        elif selection == 7:     #CAMBIO-------------
+        elif selection == 7:     #LISTA-------------
             action = Challenge(p_counter,players,1,7)
             a, b= action.challenge_player()
             if a == 0 and b == 0:     #Nadie quiso desafiar, entonces se hace la acción

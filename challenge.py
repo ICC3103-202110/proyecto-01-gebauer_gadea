@@ -62,7 +62,7 @@ class Challenge:
         challenges = self.ask_players()
         action_name, influence_needed, influence_name,block_card,names = self.cards()
         if challenges == 0:
-            return 0,0 #NADIE QUISO DESAFIAR, LA ACCIÓN SE HACE O PASA A CONTRA-ATAQUE
+            return 0,0,0 #NADIE QUISO DESAFIAR, LA ACCIÓN SE HACE O PASA A CONTRA-ATAQUE
         else:
                 selected_challenge = random.randint(0,len(challenges)-1)
                 a = challenges[selected_challenge]
@@ -73,20 +73,21 @@ class Challenge:
                     if self.players_list[self.player]._Players__influence1 != influence_needed and self.players_list[self.player]._Players__influence2 != influence_needed:
                         print("El jugador "+str(int(self.player)+1)+" no posee la influencia "+str(influence_name)+", da vuelta una carta")
                         self.show_card(self.player+1, self.action)
-                        return 0,1    #El jugador pierde el desafío porque no tiene la influencia, la acción no se realiza
+                        return 0,1,0    #El jugador pierde el desafío porque no tiene la influencia, la acción no se realiza
                     elif self.players_list[self.player]._Players__influence1 == influence_needed:
                         print("El jugador "+str(self.player +1)+" posee la influencia "+influence_needed + ", el jugador "+str(a+1)+" da vuelta una carta") #Si posee, la influencia, si hace la acción
                         self.show_card(a+1,self.action)
                         print("El jugador "+str(self.player +1)+" devuelve su carta al mazo y saca otra.")
-                        return 1,3   #Devuelve la carta 1 , sigue al contra-ataque
+                        return 1,3,0   #Devuelve la carta 1 , sigue al contra-ataque
 
                     elif self.players_list[self.player]._Players__influence2 == influence_needed:
                         print("El jugador "+str(self.player +1)+" posee la influencia "+influence_needed + ", el jugador "+str(a+1)+" da vuelta una carta")
                         self.show_card(a+1,self.action)
                         print("El jugador "+str(self.player +1)+" devuelve su carta al mazo y saca otra.")
-                        return 2,3  #Devuelve la carta2,  sigue el contra-ataque
+                        return 2,3, 0 #Devuelve la carta2,  sigue el contra-ataque
                 else:
                     if self.action != 7:
+
                         if self.players_list[self.player]._Players__influence1 != block_card[0] and self.players_list[self.player]._Players__influence2 !=block_card[0]:
                             print("El jugador "+str(self.player+1)+" no posee la influencia "+ names[0]+", da vuelta una carta")
                             self.show_card(self.player+1, self.action)
