@@ -157,7 +157,7 @@ def menu_options(p_counter):
             
         elif selection == 7:     #LISTA-------------
             action = Challenge(p_counter,players,1,7)
-            a, b= action.challenge_player()
+            a, b, c= action.challenge_player()
             if a == 0 and b == 0:     #Nadie quiso desafiar, entonces se hace la acción
                 action = Change(players,p_counter,influences)
                 action.change_cards()

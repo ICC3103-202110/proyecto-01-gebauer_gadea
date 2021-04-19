@@ -31,8 +31,8 @@ class Change:
             print("Carta 2 incorrecta. Trate otra vez")
             self.change_cards()
         else:
-            self.player[self.i]._Players__influence1 = list1[answer]
-            self.player[self.i]._Players__influence2 = list1[answer2]
+            self.player[self.i]._Players__influence1 = list1[answer-1]
+            self.player[self.i]._Players__influence2 = list1[answer2-1]
         for i in range(0,4):
             if i != answer and i != answer2:
                 self.influences.append(list1[i])
