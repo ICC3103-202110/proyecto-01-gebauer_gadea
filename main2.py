@@ -2,8 +2,12 @@ import random
 from game import Game
 from players import Players
 from entry import Entry
+from challenge import Challenge
 from abroad_help import Abroad_help
 from hit import Hit
+from counterattack import Counter_attack
+
+
 players = []
 influences = []
 posibilities_names = ["D","A","Ca","Co","E"]
@@ -45,9 +49,30 @@ def menu_options(p_counter):
             action.a_entry()
             change_player(p_counter)
         elif selection ==2:
-            action = Abroad_help(players,p_counter)
-            action.a_entry()
+            block = Counter_attack(p_counter,players,2)
+            block = block.attack()
+            if block == 0:           #Nadie quiso contraatacar, entonces se ejecuta la acción.
+                action = Abroad_help(players,p_counter)
+                action.a_entry()
+            else:                                       #En este caso se puede hacer un desafío
+                attacking = block -1                  #El jugador "block" quiso contraatacar
+                action = Challenge(attacking, players,2)
+                attack = action.challenge_player()
+                if attack == 0:                       #Nadie quiso desafiar el contra-ataque, entonces no se ejecuta la acción y le toca al siguiente jugador
+                    change_player(p_counter)
+                elif attack == 3:              #El que contra-atacó mintió, la acción si se ejecuta
+                    action = Abroad_help(players,p_counter)
+                    action = action.a_entry
+                elif attack == 1:
+                        players[attacking]._Players__influence1 = return_card(players[attacking]._Players__influence1)  
+                elif attack == 2:
+                    players[attacking]._Players__influence2 = return_card(players[attacking]._Players__influence2)
             change_player(p_counter)
+                
+    
+
+
+    
         elif selection ==3:
             action = Hit(players,p_counter)
             action.hit()

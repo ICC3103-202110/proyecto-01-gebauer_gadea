@@ -62,7 +62,7 @@ def print_menu1(p_counter):
         print("3. Golpe")
         print("4. Impuesto(D)")
         print("5. Asesinato(A)")
-        print("6. Extorcion(Ca)")
+        print("6. Extorsión(Ca)")
         print("7. Cambio(E))")
         answer = int(input())
         if answer<1 or answer>7:
