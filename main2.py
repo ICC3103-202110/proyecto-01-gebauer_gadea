@@ -115,7 +115,7 @@ def menu_options(p_counter):
             
 
         elif selection ==6:    #EXTORSIÓN-------------
-            action = Challenge(p_counter,players,4)
+            action = Challenge(p_counter,players,1,6)
             a, b= action.challenge_player()
             if a == 0 and b == 0:     #Nadie quiso contra-atacar, luego van los contra-ataques
                 print("hola.Faltan los contra-ataques")
@@ -128,7 +128,7 @@ def menu_options(p_counter):
                     players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
             
         elif selection == 7:     #CAMBIO-------------
-            action = Challenge(p_counter,players,4)
+            action = Challenge(p_counter,players,1,7)
             a, b= action.challenge_player()
             if a == 0 and b == 0:     #Nadie quiso contra-atacar, luego van los contra-ataques
                 print("hola.Faltan los contra-ataques")
