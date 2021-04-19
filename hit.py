@@ -22,8 +22,7 @@ class Hit:
         elif against <1 or against > len(self.player):
             print("No existe ese jugador")
             self.hit()
-        else: 
-            self.player[self.i]._Players__coins -=7  
+        else:  
             self.show_card(against)
 
  
