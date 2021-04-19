@@ -130,16 +130,19 @@ def menu_options(p_counter):
         elif selection == 7:     #CAMBIO-------------
             action = Challenge(p_counter,players,1,7)
             a, b= action.challenge_player()
-            if a == 0 and b == 0:     #Nadie quiso contra-atacar, luego van los contra-ataques
-                print("hola.Faltan los contra-ataques")
+            if a == 0 and b == 0:     #Nadie quiso desafiar, entonces se hace la acción
+                action = Change(players,p_counter,influences)
+                action.change_cards()
             elif a == 0 and b ==1:    #el jugador pierde el desafío entonces no realiza la acción y cambia de turno
                 change_player(p_counter)
-            elif b == 3:        #Si poseía la carta influencia, pasa a contra-ataque
+            elif b == 3:        #Si poseía la carta influencia, realiza la acción
                 if a == 1:
                     players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1)
                 elif a == 2:
                     players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
-            
+                action = Change(players,p_counter,influences)
+                action.change_cards()
+                change_player(p_counter)
 
    
     
