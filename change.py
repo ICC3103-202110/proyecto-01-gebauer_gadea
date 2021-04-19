@@ -19,7 +19,7 @@ class Change:
         card1, card2 = self.select_card()
         list1 = [card1,card2,self.player[self.i]._Players__influence1,self.player[self.i]._Players__influence2]
         print("ACCIÓN CAMBIAR CARTAS")
-        print(f" 1:{list1[0]}  2:{list1[2]}  3:{list1[3]}  4:{list1[3]}")
+        print(f" 1:{list1[0]}  2:{list1[1]}  3:{list1[2]}  4:{list1[3]}")
         print("Elije la primera carta para quedarte")
         answer = int(input())
         print("Elije la segunda carta para quedarte")
@@ -34,7 +34,7 @@ class Change:
             self.player[self.i]._Players__influence1 = list1[answer-1]
             self.player[self.i]._Players__influence2 = list1[answer2-1]
         for i in range(0,4):
-            if i != answer and i != answer2:
+            if i != answer-1 and i != answer2-2:
                 self.influences.append(list1[i])
                 random.shuffle(self.influences)
      
