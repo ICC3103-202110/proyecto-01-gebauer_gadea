@@ -29,10 +29,12 @@ class Murder:
         if self.player[against-1]._Players__seen_cards1 != str([]):
             print("Sólo le queda una carta, se dará vuelta esa")
             print("JUGADOR " +str(against)+ " PIERDE EL JUEGO")
+            self.player[against-1]._Players__player_number = 0
             card = 2  
         elif self.player[against-1]._Players__seen_cards2 != str([]):
             print("Sólo le queda una carta, se dará vuelta esa")
             print("JUGADOR " +str(against)+ " PIERDE EL JUEGO")
+            self.player[against-1]._Players__player_number = 0
             card = 1
         else:
             card = int(input("Diga la carta que quiera dar vuelta(1 o 2)"))

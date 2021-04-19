@@ -43,10 +43,12 @@ class Game:
     def shown_cards(self):
         print("\nCartas de jugadores\n")
         for (i,_) in enumerate(self.players_list):
-            print(f"player{self.players_list[i]._Players__player_number} => {self.players_list[i]._Players__seen_cards1} {self.players_list[i]._Players__seen_cards2}\n")
-        
+            if self.players_list[i]._Players__player_number != 0:
+                print(f"player {self.players_list[i]._Players__player_number} => {self.players_list[i]._Players__seen_cards1} {self.players_list[i]._Players__seen_cards2}\n")
+            
     def show_coins(self):
         print("\nMonedas de jugadores\n")
         for (i,_) in enumerate(self.players_list):
-            print(f"player{self.players_list[i]._Players__player_number} => {self.players_list[i]._Players__coins},{self.players_list[i]._Players__influence1},{self.players_list[i]._Players__influence2}")
+            if self.players_list[i]._Players__player_number != 0:
+                print(f"player{self.players_list[i]._Players__player_number} => {self.players_list[i]._Players__coins},{self.players_list[i]._Players__influence1},{self.players_list[i]._Players__influence2}")
     

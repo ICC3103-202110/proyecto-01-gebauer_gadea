@@ -26,11 +26,22 @@ def create_game():
         players.append(Players(str(i+1),card1,card2,2))
 
 def change_player(p_counter):
-    if p_counter == len(players)-1:
+    var = 0
+    if p_counter == (len(players)-1):
         p_counter = 0
     else:
         p_counter += 1
-    menu_options(p_counter)
+    if players[p_counter]._Players__player_number == 0:
+        change_player(p_counter)
+    for i in range(0,len(players)):
+        if players[i]._Players__player_number != 0:
+            var += 1
+    if var == 1:
+        print("Fin del juego, gana el jugador",p_counter+1)
+        
+    else:
+        menu_options(p_counter)
+
 
 def select_influence():
     card = influences[0]
@@ -59,7 +70,7 @@ def menu_options(p_counter):
                 action.a_entry()
             else:                                       #En este caso se puede hacer un desafío
                 attacking = block                  #El jugador "block" quiso contraatacar
-                action = Challenge(attacking, players,1,2)
+                action = Challenge(attacking-1, players,1,2)
                 attack = action.challenge_player()
                 if attack == 0:                       #Nadie quiso desafiar el contra-ataque, entonces no se ejecuta la acción y le toca al siguiente jugador
                     change_player(p_counter)

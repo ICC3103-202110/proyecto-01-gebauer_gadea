@@ -46,6 +46,7 @@ class Challenge:
         challenge_list = []
         for a in range(0, len(self.players_list)):
             if a != self.player:
+                if self.players_list[a]._Players__player_number != 0:
                     print("\nJugador "+str(a+1)+", elija una opción.")
                     print("\n1. DESAFIAR A JUGADOR", self.player+1)
                     print("0. NO HACER NADA")
@@ -136,10 +137,12 @@ class Challenge:
         if self.players_list[against-1]._Players__seen_cards1 != str([]):
             print("Sólo le queda una carta, se dará vuelta esa")
             print("JUGADOR " +str(against)+ " PIERDE EL JUEGO")
+            self.players_list[against-1]._Players__player_number = 0
             card = 2  
         elif self.players_list[against-1]._Players__seen_cards2 != str([]):
             print("Sólo le queda una carta, se dará vuelta esa")
             print("JUGADOR " +str(against)+ " PIERDE EL JUEGO")
+            self.players_list[against-1]._Players__player_number = 0
             card = 1
         else:
             card = int(input("Diga la carta que quiera dar vuelta(1 o 2)"))
@@ -150,3 +153,4 @@ class Challenge:
             self.players_list[against-1]._Players__seen_cards1 = "["+str(self.players_list[against-1]._Players__influence1)+"]"
         else:
             self.players_list[against-1]._Players__seen_cards2 = "["+str(self.players_list[against-1]._Players__influence2)+"]"
+

@@ -33,18 +33,19 @@ class Counter_attack:
         attack = []
         for j in range(0, len(self.players_list)): #Hay que buscar la forma de saber la cantidad de jugadores que juegan
             if j != self.player:
-                print("\nJugador "+str(j+1)+", elija una opción.")
-                if block_card[0] == "D" or block_card[0] == "Co":
-                    print("\n1. POSEO LA CARTA "+str(names[0])+" Y QUIERO CONTRA-ATACAR LA ACCIÓN "+action)
-                else:
-                    print("\n1. POSEO LA CARTA "+str(names[0])+" Ó "+str(names[1])+" Y QUIERO CONTRA-ATACAR LA ACCIÓN "+action)
-                print("0. NADA\n")
-                a = int(input())
-                if a == 1:  #Si alguien quiere contraatacar..
-                    attack.append(j)
-                elif a !=0 and a != 1:
-                    print("Esa opción no es correcta, se asimila que no quiere hacer nada")
-                    a = 0
+                if self.players_list[j]._Players__player_number != 0:
+                    print("\nJugador "+str(j+1)+", elija una opción.")
+                    if block_card[0] == "D" or block_card[0] == "Co":
+                        print("\n1. POSEO LA CARTA "+str(names[0])+" Y QUIERO CONTRA-ATACAR LA ACCIÓN "+action)
+                    else:
+                        print("\n1. POSEO LA CARTA "+str(names[0])+" Ó "+str(names[1])+" Y QUIERO CONTRA-ATACAR LA ACCIÓN "+action)
+                    print("0. NADA\n")
+                    a = int(input())
+                    if a == 1:  #Si alguien quiere contraatacar..
+                        attack.append(j)
+                    elif a !=0 and a != 1:
+                        print("Esa opción no es correcta, se asimila que no quiere hacer nada")
+                        a = 0
         if len(attack) == 0:
             return 0
         else:
