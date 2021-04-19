@@ -25,10 +25,4 @@ class Players:
     @property
     def coins (self):
         return self.__coins
-    @coins.setter
-    def coins(self, value):
-        print("Setter de coins")
-        if self.__coins >= 0:
-            self.__coins = value
-        else: 
-            raise ValueError("No tiene suficientes monedas")
+

@@ -111,9 +111,9 @@ def menu1(p_counter, players_num):
             elif b == 2:
                 players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
 
-        if selection == 6:                            #FALTA-------------------------------------------------------
+        if selection == 6:                          
             b, j = c.block_card2(2)
-        if selection ==7:                               #LISTA
+        if selection ==7:                             
             random.shuffle(influences)
             h = c.change(influences[0],influences[1],influences)
             for i in range(0,3):
