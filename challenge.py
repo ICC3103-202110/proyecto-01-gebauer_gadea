@@ -47,7 +47,7 @@ class Challenge:
         for a in range(0, len(self.players_list)):
             if a != self.player:
                     print("\nJugador "+str(a+1)+", elija una opción.")
-                    print("\n1. DESAFIAR A JUGADOR", self.player)
+                    print("\n1. DESAFIAR A JUGADOR", self.player+1)
                     print("0. NO HACER NADA")
                     b = int(input())
                     if b == 1:

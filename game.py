@@ -10,7 +10,7 @@ class Game:
 
 
     def print_menu(self):
-            self.shown_cards
+            self.shown_cards()
             self.show_coins()
             print("------------------")
             print("Le toca al jugador", self.player+1)
