@@ -11,6 +11,6 @@ class Abroad_help:
     def type_action(self):
         return 2
 
-    def a_entry(self):
+    def a_abroad_help(self):
         self.player[self.i]._Players__coins += 2
         return 0

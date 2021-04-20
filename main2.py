@@ -71,23 +71,24 @@ def menu_options(p_counter):
         block = block.attack()
         if block == 0:           #Nadie quiso contraatacar, entonces se ejecuta la acción.
             action = Abroad_help(players,p_counter)
-            action.a_entry()
+            action.a_abroad_help()
         else:                                       #En este caso se puede hacer un desafío
             attacking = block                  #El jugador "block" quiso contraatacar
-            action = Challenge(attacking-1, players,1,2)
-            attack = action.challenge_player()
-            if attack == 0:                       #Nadie quiso desafiar el contra-ataque, entonces no se ejecuta la acción y le toca al siguiente jugador
+            action = Challenge(attacking-1, players,2,2)
+            a,b,c = action.challenge_player()
+            if a == 0 and b == 0 :                       #Nadie quiso desafiar el contra-ataque, entonces no se ejecuta la acción y le toca al siguiente jugador
                 var = change_player(p_counter)
                 if var == 1:
                     return 0
 
-            elif attack == 3:              #El que contra-atacó mintió, la acción si se ejecuta
+            elif a == 0 and b == 1:              #El que contra-atacó mintió, la acción si se ejecuta
                 action = Abroad_help(players,p_counter)
-                action = action.a_entry
-            elif attack == 1:
-                players[attacking]._Players__influence1 = return_card(players[attacking]._Players__influence1)  
-            elif attack == 2:
-                players[attacking]._Players__influence2 = return_card(players[attacking]._Players__influence2)
+                action.a_abroad_help()
+            elif b == 3:
+                if a ==1:
+                    players[attacking-1]._Players__influence1 = return_card(players[attacking-1]._Players__influence1)  
+                elif a == 2:
+                    players[attacking-1]._Players__influence2 = return_card(players[attacking-1]._Players__influence2)
         var = change_player(p_counter)
         if var == 1:
             return 0
@@ -113,7 +114,11 @@ def menu_options(p_counter):
             if a == 1:
                 players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1) 
             elif a == 2:
+                action = Tax(players, p_counter)
+                action.a_tax()
                 players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
+            action = Tax(players, p_counter)
+            action.a_tax()
         var = change_player(p_counter)
         if var == 1:
             return 0
