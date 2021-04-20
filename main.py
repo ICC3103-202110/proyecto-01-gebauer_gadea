@@ -1,35 +1,23 @@
-#PREGUNTAS PARA AYUDANTE:
-#1) Cómo hacer una clase padre que tenga los atributos de general_actiones y character_actions (son los mismos atributos)
-#2) Las 2 clases comparten el método de show_card()
-#3) No entiendo en el caso de las acciones generales qué pasa con la acción cuando el que desafiaba pierde.
-#4) Cuántas clases tienen que haber?
-#5) Cómo mostrarle las clases al jugador que elija la acción Cambio si los demás no pueden ver mostrarlas
-#6) Cómo eliminar a los jugadores
-#7) Qué pasa si un jugador tiene 0 monedas y alguien le quita más
-
 import random
+from actions import Actions
+from game import Game
 from players import Players
-from general_actions import General_actions
-from character_action import Character_actions
+from entry import Entry
+from challenge import Challenge
+from abroad_help import Abroad_help
+from hit import Hit
+from counterattack import Counter_attack
+from tax import Tax
+from change import Change
+from murderer import Murder
+from extortion import Extortion
 
 players = []
 influences = []
-posibilities = ["D","A","Ca","Co","E"]
-
-
-    
-def select_influence():
-    card = influences[0]
-    influences.pop(0)
-    return card
-def show_coins():
-    print("\nMonedas de jugadores\n")
-    for (i,_) in enumerate(players):
-        print(f"player{players[i]._Players__player_number} => {players[i]._Players__coins},{players[i]._Players__influence1},{players[i]._Players__influence2}")
-    shown_cards()
+posibilities_names = ["D","A","Ca","Co","E"]
 
 def create_game():
-    for i in posibilities:
+    for i in posibilities_names:
         for j in range(0,players_num):
             influences.append(i)
     random.shuffle(influences)
@@ -37,104 +25,247 @@ def create_game():
         card1 = select_influence()
         card2 = select_influence()
         players.append(Players(str(i+1),card1,card2,2))
-    print("Duque = D\nAsesino = A\nCapitán = Ca\nEmbajador= E\nCondesa = Co\n")
-    
 
-def print_menu1(p_counter):
-    show_coins()
-    print("-------------------------------------")
-    print("Le toca al jugador", int(p_counter)+1)
-    print("-------------------------------------\n")
-    print("\nQuiere ver sus cartas? s/n")
-    see = str(input())
-    if see == "s":
-        print(f"Sus cartas son => {players[p_counter]._Players__influence1},{players[p_counter]._Players__influence2}")
-    if see != "n" and see !="s":
-        print("Respuesta incorrecta. Se asume que no quiere ver sus cartas")
-    if players[p_counter].coins == 10:                 
-        print("Tiene 10 monedas. Toma la acción de golpe")
-        answer = 3                              
-        return answer                           
-    else:   
-        print("\nINGRESE UNA OPCION:")
-        print("1. Ingreso")
-        print("2. Ayuda del extranjero")
-        print("3. Golpe")
-        print("4. Impuesto(D)")
-        print("5. Asesinato(A)")
-        print("6. Extorsión(Ca)")
-        print("7. Cambio(E))")
-        answer = int(input())
-        if answer<1 or answer>7:
-            print("Valor no valido")
-            print_menu1(p_counter) 
-        else:
-            return answer
-
-
-
-
-def menu1(p_counter, players_num):
-    while True:
-        a= General_actions(players,p_counter)
-        c = Character_actions(players,p_counter)
-        selection = print_menu1(p_counter)
-        if selection == 1:
-            a.entry() 
-            change_player(p_counter,players_num) 
-        if selection == 2:
-            b,j = a.abroad_help()
-            if b == 1:
-                players[j]._Players__influence1 = return_card(players[j]._Players__influence1)  
-            elif b == 2:
-                players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
-               
-            change_player(p_counter,players_num)
-        if selection ==3:                            #LISTA
-            try:
-                a.hit()
-                change_player(p_counter,players_num)
-            except ValueError as e:
-                print(e)
-                menu1(p_counter,players_num) 
-
-        if selection == 4:
-                c.tax()
-                change_player(p_counter, players_num)
-        if selection == 5:                           #LISTA
-            if players[p_counter].coins < 3:
-                print("No puede realizar la acción asesinato porque le faltan monedas. Trate otra")
-                menu1(p_counter, players_num)
-            b, j = c.block_card(1)
-            if b == 1:
-                players[j]._Players__influence1 = return_card(players[j]._Players__influence1) 
-            elif b == 2:
-                players[j]._Players__influence2 = return_card(players[j]._Players__influence2)
-
-        if selection == 6:                          
-            b, j = c.block_card2(2)
-        if selection ==7:                             
-            random.shuffle(influences)
-            h = c.change(influences[0],influences[1],influences)
-            for i in range(0,3):
-                influences.pop(i)
-            influences = h
-            change_player(p_counter,players_num)
-            
-            
-
-def shown_cards():
-    print("\nCartas de jugadores\n")
-    for (i,_) in enumerate(players):
-        print(f"player{players[i]._Players__player_number} => {players[i]._Players__seen_cards1} {players[i]._Players__seen_cards2}\n")
-
-def change_player(p_counter, players_num):
-    if p_counter == players_num-1:
+def change_player(p_counter):
+    var = 0
+    if p_counter == (len(players)-1):
         p_counter = 0
     else:
         p_counter += 1
-    menu1(p_counter,players_num)
+    if players[p_counter]._Players__player_number == 0:
+        change_player(p_counter)
+    for i in range(0,len(players)):
+        if players[i]._Players__player_number != 0:
+            var += 1
+    if var == 1:
+        print("Fin del juego, gana el jugador",p_counter+1)
+        return var
+        
+    else:
+        menu_options(p_counter)
+        return 0
 
+
+def select_influence():
+    card = influences[0]
+    influences.pop(0)
+    return card
+
+def player_turn(p_counter):
+    game_actions = Game(p_counter,players)
+    answer = game_actions.print_menu()
+    return answer
+
+
+
+def menu_options(p_counter):
+
+    selection = player_turn(p_counter)
+    if selection ==1:                   #LISTO
+        action = Entry(players,p_counter)
+        action.a_entry()
+        var = change_player(p_counter)
+        if var == 1:
+            return 0
+    elif selection ==2:     #LISTO
+        block = Counter_attack(p_counter,players,2)
+        block = block.attack()
+        if block == 0:           #Nadie quiso contraatacar, entonces se ejecuta la acción.
+            action = Abroad_help(players,p_counter)
+            action.a_abroad_help()
+        else:                                       #En este caso se puede hacer un desafío
+            attacking = block                  #El jugador "block" quiso contraatacar
+            action = Challenge(attacking-1, players,2,2)
+            a,b,c = action.challenge_player()
+            if a == 0 and b == 0 :                       #Nadie quiso desafiar el contra-ataque, entonces no se ejecuta la acción y le toca al siguiente jugador
+                var = change_player(p_counter)
+                if var == 1:
+                    return 0
+
+            elif a == 0 and b == 1:              #El que contra-atacó mintió, la acción si se ejecuta
+                action = Abroad_help(players,p_counter)
+                action.a_abroad_help()
+            elif b == 3:
+                if a ==1:
+                    players[attacking-1]._Players__influence1 = return_card(players[attacking-1]._Players__influence1)  
+                elif a == 2:
+                    players[attacking-1]._Players__influence2 = return_card(players[attacking-1]._Players__influence2)
+        var = change_player(p_counter)
+        if var == 1:
+            return 0
+
+
+    elif selection ==3:                   #LISTO
+        if players[p_counter]._Players__coins <7:
+            print("No se puede realizar esta acción, le faltan monedas. Trate otra vez")
+            menu_options(p_counter)
+        action = Hit(players,p_counter)
+        action.hit()
+        var = change_player(p_counter)
+        if var == 1:
+            return 0
+
+    elif selection == 4:       #LISTO
+        action = Challenge(p_counter,players,1,4)  #El 1 significa que se verifican las influencias de acciones
+        a, b, c= action.challenge_player()
+        if a == 0 and b == 0:     #Nadie quiso desafiar, entonces se ejecuta la acción
+            action = Tax(players, p_counter)
+            action.a_tax()
+        elif b == 3:
+            if a == 1:
+                players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1) 
+            elif a == 2:
+                action = Tax(players, p_counter)
+                action.a_tax()
+                players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
+            action = Tax(players, p_counter)
+            action.a_tax()
+        var = change_player(p_counter)
+        if var == 1:
+            return 0
+    
+
+    elif selection ==5:      #ASESINATO---------------
+        if  players[p_counter]._Players__coins < 3:
+            print("No se puede realizar esta acción, le faltan monedas. Trate otra vez")
+            menu_options(p_counter)
+        action = Challenge(p_counter,players,1,5)
+        a, b, c= action.challenge_player()
+        if a == 0 and b == 0:     #Nadie quiso desafiar, luego van los contra-ataques
+            action = Counter_attack(p_counter,players,5)
+            player_attack = action.attack()
+            if player_attack == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
+                action = Murder(players, p_counter)
+                action.murder()
+            else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
+                action = Challenge(player_attack-1,players,2,5)
+                a, b , c = action.challenge_player()  #c es el jugador que desafió
+                if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple, pierde las monedas
+                    players[p_counter]._Players__coins = -3
+                    var = change_player(p_counter)
+                    if var == 1:
+                        return 0
+                elif a == 0 and b == 1:  #Pierde el desafío el que contra-atacó, se ejecuta la acción
+                    action = Murder(players, p_counter)
+                    action.murder()
+                elif b == 3:          #El que contraatacó ganó el desafío.
+                    if a == 1:
+                        players[c]._Players__influence1 = return_card(players[c]._Players__influence1)
+                    else:
+                        players[c]._Players__influence2 = return_card(players[c]._Players__influence2)
+
+        elif a == 0 and b ==1:    #Alguien quiso contra-atacar, el jugador pierde el desafío entonces no realiza la acción y cambia de turno
+            var = change_player(p_counter)
+            if var == 1:
+                return 0
+        elif b == 3:        #Si poseía la carta influencia, entonces pasa a contra-ataques
+            if a == 1:
+                players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1)
+            elif a == 2:
+                players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
+            action = Counter_attack(p_counter,players,5)
+            player_attack = action.attack()
+            if player_attack == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
+                action = Murder(players, p_counter)
+                action.murder()
+            else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
+                action = Challenge(player_attack-1,players,2,5)
+                a, b , c = action.challenge_player()  #c es el jugador que desafió
+                if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple
+                    var = change_player(p_counter)
+                    if var == 1:
+                        return 0
+                elif a == 0 and b == 1:  #Pierde el desafío el que contra-atacó, se ejecuta la acción
+                    action = Murder(players, p_counter)
+                    action.murder()
+                elif b == 3:          #El que contraatacó ganó el desafío.
+                    if a == 1:
+                        players[c]._Players__influence1 = return_card(players[c]._Players__influence1)
+                    else:
+                        players[c]._Players__influence2 = return_card(players[c]._Players__influence2)
+        var = change_player(p_counter)
+        if var == 1:
+            return 0
+
+    elif selection ==6:    #EXTORSIÓN-------------
+        action = Challenge(p_counter,players,1,6)
+        a,b, c= action.challenge_player()
+        if a == 0 and b == 0:     #Nadie quiso contra-atacar, luego van los contra-ataques
+            action = Counter_attack(p_counter,players,6)
+            player_attack = action.attack()
+            if player_attack == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
+                action = Extortion(players,p_counter)
+                action.extortion()
+            else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
+                action = Challenge(player_attack-1,players,2,6)
+                a, b , c = action.challenge_player()  #c es el jugador que desafió
+                if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple
+                    var = change_player(p_counter)
+                    if var == 1:
+                        return 0
+                elif a == 0 and b == 1:  #Pierde el desafío el que contra-atacó, se ejecuta la acción
+                    action = Extortion(players, p_counter)
+                    action.extortion()
+                elif b == 3:          #El que contraatacó ganó el desafío.
+                    if a == 1:
+                        players[c]._Players__influence1 = return_card(players[c]._Players__influence1)
+                    else:
+                        players[c]._Players__influence2 = return_card(players[c]._Players__influence2)
+
+        elif a == 0 and b ==1:    #el jugador pierde el desafío entonces no realiza la acción y cambia de turno
+            var = change_player(p_counter)
+            if var == 1:
+                return 0
+        elif b == 3:        #Si poseía la carta influencia, pasa a contra-ataque
+            if a == 1:
+                players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1)
+            elif a == 2:
+                players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
+            action = Counter_attack(p_counter,players,5)    
+            player_attack = action.attack()
+            if player_attack == 0:      #Nadie quiso contra-atacar ni desafiar, entonces se ejecuta la acción
+                action = Extortion(players, p_counter)
+                action.extortion()
+            else:                    #Nadie quiso desafiar pero si contra-atacar, se pregunta si desafían al que contra-atacó (supuestamente tiene a la Condesa)
+                action = Challenge(player_attack-1,players,2,5)
+                a, b , c = action.challenge_player()  #c es el jugador que desafió
+                if a == 0 and b == 0:   #Nadie desafía el contra-ataque, la acción no se cumple
+                    var = change_player(p_counter)
+                    if var == 1:
+                        return 0
+                elif a == 0 and b == 1:  #Pierde el desafío el que contra-atacó, se ejecuta la acción
+                    action = Extortion(players, p_counter)
+                    action.extortion()
+                elif b == 3:          #El que contraatacó ganó el desafío.
+                    if a == 1:
+                        players[c]._Players__influence1 = return_card(players[c]._Players__influence1)
+                    else:
+                        players[c]._Players__influence2 = return_card(players[c]._Players__influence2)
+    elif selection == 7:     #LISTA-------------
+        action = Challenge(p_counter,players,1,7)
+        a, b, c= action.challenge_player()
+        if a == 0 and b == 0:     #Nadie quiso desafiar, entonces se hace la acción
+            action = Change(players,p_counter,influences)
+            action.change_cards()
+                
+        elif a == 0 and b ==1:    #el jugador pierde el desafío entonces no realiza la acción y cambia de turno
+            var = change_player(p_counter)
+            if var == 1:
+                return 0
+        elif b == 3:        #Si poseía la carta influencia, realiza la acción
+            if a == 1:
+                players[p_counter]._Players__influence1 = return_card(players[p_counter]._Players__influence1)
+            elif a == 2:
+                players[p_counter]._Players__influence2 = return_card(players[p_counter]._Players__influence2)
+            action = Change(players,p_counter,influences)
+            action.change_cards()
+            var = change_player(p_counter)
+            if var == 1:
+                return 0
+
+   
+    
+            
 
 def return_card(carta):
     influences.append(carta)            #Devuelve la carta al mazo 
@@ -147,7 +278,17 @@ def return_card(carta):
 
 
 if __name__ == '__main__':
-    p_counter = 0
-    players_num = int(input("\nElija la cantidad de jugadores (3 o 4)"))
+
+    p_counter = 0 
+    players_num = 0
+    while players_num != 3 and players_num != 4:
+        players_num = int(input("\nElija la cantidad de jugadores (3 o 4)"))
     create_game()
-    menu1(p_counter, players_num)
+    looper = 1
+    while looper != 0 :
+        if menu_options(p_counter)== 0:
+            looper = 0
+            break
+
+    
+    

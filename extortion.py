@@ -1,10 +1,13 @@
-class Extortion:
+from actions import Actions
+
+class Extortion(Actions):
     #CONSTRUCTOR
     def __init__(self,player,i):
-        self.player = player
-        self.i = i
+        super(Extortion, self).__init__(player, i)
         
     #METODOS
+    def change_coins(self,n,who):
+        self.player[who]._Players__coins += n
 
     def extortion(self):
         print("EL JUGADOR "+str(self.i +1)+" ELIGIÓ LA ACCIÓN EXTORSIÓN")
@@ -23,7 +26,8 @@ class Extortion:
         
     def a_extortion(self,against):
         if self.player[against-1]._Players__coins == 1:
-            self.player[against-1]._Players__coins -=1
+            self.change_coins(-1,against-1)
+            self.change_coins(1,self.i)
             print("Sólo se le quitó una moneda")
         elif self.player[against-1]._Players__coins == 0:
             print("No se le pueden quitar más monedas, pasa a siguiente turno")
@@ -34,4 +38,5 @@ class Extortion:
                 print("No se puede esa cantidad")
                 self.a_extortion(against)
             else:
-                self.player[against-1]._Players__coins -= answer
+                self.change_coins(-answer,against-1)
+                self.change_coins(answer,self.i)

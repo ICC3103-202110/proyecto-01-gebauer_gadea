@@ -1,16 +1,15 @@
-class Abroad_help:
+from actions import Actions
+class Abroad_help(Actions):
     #CONSTRUCTOR
     def __init__(self,player,i):
-        self.player = player
-        self.i = i
+        super(Abroad_help, self).__init__(player,i)
 
-        self.type_action()
         
     #METODOS
 
-    def type_action(self):
-        return 2
+    def change_coins(self):
+        self.player[self.i]._Players__coins += 2
 
     def a_abroad_help(self):
-        self.player[self.i]._Players__coins += 2
+        self.change_coins()
         return 0

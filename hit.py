@@ -1,18 +1,16 @@
 #esta es la clase de la accion golpe
 import random
-class Hit:
+from actions import Actions
+class Hit(Actions):
 
     #CONSTRUCTOR
     def __init__(self,player,i):
-        self.player = player
-        self.i = i
+        super(Hit, self).__init__(player, i)
 
-        self.type_action()
         
     #METODOS
-
-    def type_action(self):
-        return 3 
+    def change_coins(self):
+        self.player[self.i]._Players__coins -=7 
 
     def hit(self):
         against = int(input("Elija un jugador al que quiera realizar esta acción"))
@@ -22,7 +20,8 @@ class Hit:
         elif against <1 or against > len(self.player):
             print("No existe ese jugador")
             self.hit()
-        else:  
+        else:
+            self.change_coins()  
             self.show_card(against)
 
  

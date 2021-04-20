@@ -1,18 +1,20 @@
-#esta es la accion de cambio 
 import random
-class Change:
-
+from actions import Actions
+class Change(Actions):
+    
     #CONSTRUCTOR
     def __init__(self,player,i,influences):
-
-        self.player = player
-        self.i = i
+        super(Change, self).__init__(player, i)
         self.influences = influences
+    
+    def change_coins(self):
+       self.player[self.i]._Players__coins += 0 
 
     def select_card(self):
         card1 = self.influences[0]
         card2 = self.influences[1]
         return card1, card2
+
 
 
     def change_cards(self):

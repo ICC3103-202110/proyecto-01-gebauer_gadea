@@ -1,12 +1,14 @@
 import random
-class Murder:
+from actions import Actions
+class Murder(Actions):
     #CONSTRUCTOR
     def __init__(self,player,i):
-        self.player = player
-        self.i = i
+        super(Murder,self).__init__(player,i)
         
     #METODOS
 
+    def change_coins(self):
+        self.player[self.i]._Players__coins -= 3
 
     def murder(self):
         print("EL JUGADOR "+str(self.i +1)+" ELIGIÓ LA ACCIÓN ASESINATO")
@@ -49,4 +51,5 @@ class Murder:
 
     def make_murder(self,against):
         print("Se realiza el asesinato al jugador"+str(against))
+        self.change_coins()
         self.show_card(against)
