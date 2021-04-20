@@ -1,1 +1,0 @@
-#clase asesino esta es clase hija de cards 
