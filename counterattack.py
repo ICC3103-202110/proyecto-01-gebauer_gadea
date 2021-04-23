@@ -5,20 +5,33 @@ import random
 
 class Counter_attack:
     def __init__(self,player, players_list,action):
-        self.player = player   #El que está jugando
-        self.players_list = players_list
-        self.action = action
+        self.__player = player   #El que está jugando
+        self.__players_list = players_list
+        self.__action = action
+
+    @property
+    def player(self):
+        return self.__player
+
+    @property
+    def players_list(self):
+        return self.__players_list
+
+    @property
+    def action(self):
+        return self.__action
+
 
     def blocking_card(self):
-        if self.action == 2:
+        if self.__action == 2:
             block_card = ["D",0]
             names = ["DUQUE",0]
             action = "AYUDA DEL EXTRANJERO"
-        elif self.action == 5:
+        elif self.__action == 5:
             block_card = ["Co",0]
             names = ["CONDESA",0]
             action = "ASESINATO"
-        elif self.action == 6:
+        elif self.__action == 6:
             block_card = ["E","Ca"]
             names = ["EMBAJADOR","CAPITÁN"]
             action = "EXTORSIÓN"
@@ -31,9 +44,9 @@ class Counter_attack:
     def ask_players(self):
         block_card,names,action = self.blocking_card()
         attack = []
-        for j in range(0, len(self.players_list)): #Hay que buscar la forma de saber la cantidad de jugadores que juegan
-            if j != self.player:
-                if self.players_list[j]._Players__player_number != 0:
+        for j in range(0, len(self.__players_list)): #Hay que buscar la forma de saber la cantidad de jugadores que juegan
+            if j != self.__player:
+                if self.__players_list[j]._Players__player_number != 0:
                     print("\nJugador "+str(j+1)+", elija una opción.")
                     if block_card[0] == "D" or block_card[0] == "Co":
                         print("\n1. POSEO LA CARTA "+str(names[0])+" Y QUIERO CONTRA-ATACAR LA ACCIÓN "+action)
@@ -58,5 +71,5 @@ class Counter_attack:
         else:
             selected_attack = random.randint(0,len(attack)-1)  #Se elije un contra-ataque al azar de los que decidieron contra-atacar
             j = attack[selected_attack]
-            print("--------------El jugador "+ str(j+1) +" realiza un contra-ataque a jugador "+str(self.player+1)+"-------------")
+            print("--------------El jugador "+ str(j+1) +" realiza un contra-ataque a jugador "+str(self.__player+1)+"-------------")
         return j+1   #Se devuelve el jugador que quiso contra-atacar

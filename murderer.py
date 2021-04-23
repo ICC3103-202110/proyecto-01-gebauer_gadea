@@ -8,7 +8,7 @@ class Murder(Actions):
     #METODOS
 
     def change_coins(self):
-        self.player[self.i]._Players__coins -= 3
+        self.player[self.i].coins -= 3
 
     def murder(self):
         print("EL JUGADOR "+str(self.i +1)+" ELIGIÓ LA ACCIÓN ASESINATO")
@@ -49,7 +49,16 @@ class Murder(Actions):
         else:
                 self.player[against-1]._Players__seen_cards2 = "["+str(self.player[against-1]._Players__influence2)+"]"  
 
-    def make_murder(self,against):
-        print("Se realiza el asesinato al jugador"+str(against))
+    def make_murder(self,against):   
         self.change_coins()
+        print("Se realiza el asesinato al jugador"+str(against))
         self.show_card(against)
+        
+    def verif(self):
+        try:
+            self.change_coins()
+            
+        except ValueError as e:
+            print(e)
+            return 0
+        self.player[self.i].coins += 3

@@ -7,7 +7,7 @@ class Extortion(Actions):
         
     #METODOS
     def change_coins(self,n,who):
-        self.player[who]._Players__coins += n
+        self.player[who].coins += n
 
     def extortion(self):
         print("EL JUGADOR "+str(self.i +1)+" ELIGIÓ LA ACCIÓN EXTORSIÓN")

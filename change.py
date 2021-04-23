@@ -5,14 +5,18 @@ class Change(Actions):
     #CONSTRUCTOR
     def __init__(self,player,i,influences):
         super(Change, self).__init__(player, i)
-        self.influences = influences
+        self.__influences = influences
     
+    @property
+    def influences():
+        return self.__influences
+
     def change_coins(self):
-       self.player[self.i]._Players__coins += 0 
+       self.player[self.i].coins += 0 
 
     def select_card(self):
-        card1 = self.influences[0]
-        card2 = self.influences[1]
+        card1 = self.__influences[0]
+        card2 = self.__influences[1]
         return card1, card2
 
 
@@ -37,6 +41,6 @@ class Change(Actions):
             self.player[self.i]._Players__influence2 = list1[answer2-1]
         for i in range(0,4):
             if i != answer-1 and i != answer2-2:
-                self.influences.append(list1[i])
-                random.shuffle(self.influences)
+                self.__influences.append(list1[i])
+                random.shuffle(self.__influences)
      

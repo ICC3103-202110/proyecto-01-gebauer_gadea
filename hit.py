@@ -10,7 +10,7 @@ class Hit(Actions):
         
     #METODOS
     def change_coins(self):
-        self.player[self.i]._Players__coins -=7 
+        self.player[self.i].coins -=7 
 
     def hit(self):
         against = int(input("Elija un jugador al que quiera realizar esta acción"))
@@ -21,8 +21,13 @@ class Hit(Actions):
             print("No existe ese jugador")
             self.hit()
         else:
-            self.change_coins()  
-            self.show_card(against)
+            try:
+                self.change_coins()
+                self.show_card(against)
+            except ValueError as e:
+                print(e)
+                return 0  
+            
 
  
     def show_card(self,against):

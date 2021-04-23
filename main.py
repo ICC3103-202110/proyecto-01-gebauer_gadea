@@ -96,11 +96,10 @@ def menu_options(p_counter):
 
 
     elif selection ==3:                   #LISTO
-        if players[p_counter]._Players__coins <7:
-            print("No se puede realizar esta acción, le faltan monedas. Trate otra vez")
-            menu_options(p_counter)
         action = Hit(players,p_counter)
-        action.hit()
+        result=action.hit()
+        if result == 0:
+            menu_options(p_counter)
         var = change_player(p_counter)
         if var == 1:
             return 0
@@ -126,9 +125,11 @@ def menu_options(p_counter):
     
 
     elif selection ==5:      #ASESINATO---------------
-        if  players[p_counter]._Players__coins < 3:
-            print("No se puede realizar esta acción, le faltan monedas. Trate otra vez")
+        verif = Murder(players,p_counter)
+        verif = verif.verif()
+        if verif == 0:
             menu_options(p_counter)
+        
         action = Challenge(p_counter,players,1,5)
         a, b, c= action.challenge_player()
         if a == 0 and b == 0:     #Nadie quiso desafiar, luego van los contra-ataques

@@ -7,7 +7,7 @@ class Tax(Actions):
         
     #METODOS
     def change_coins(self):
-        self.player[self.i]._Players__coins += 3
+        self.player[self.i].coins += 3
 
     def a_tax(self):
         self.change_coins()

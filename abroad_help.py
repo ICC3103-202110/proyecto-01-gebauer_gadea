@@ -8,7 +8,7 @@ class Abroad_help(Actions):
     #METODOS
 
     def change_coins(self):
-        self.player[self.i]._Players__coins += 2
+        self.player[self.i].coins += 2
 
     def a_abroad_help(self):
         self.change_coins()

@@ -9,7 +9,7 @@ class Entry(Actions):
 
     #METODOS
     def change_coins(self):
-        self.player[self.i]._Players__coins += 1
+        self.player[self.i].coins += 1
 
     def a_entry(self):
         self.change_coins()
